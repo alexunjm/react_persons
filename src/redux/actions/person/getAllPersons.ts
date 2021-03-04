@@ -1,10 +1,7 @@
 import actionTypes from 'redux/constants/actionTypes'
+import { Dispatcher } from 'redux/actions/Dispatcher'
 
-type dispatcher = (
-  dispatch: (action: { type: string; payload?: any }) => void
-) => void
-
-export const getAllPersonsRequest = (): dispatcher => {
+const getAllPersons = (): Dispatcher => {
   return (dispatch: (action: { type: string; payload?: any }) => void) => {
     try {
       console.warn('GetAllPersonsRequest')
@@ -29,3 +26,4 @@ export const getAllPersonsRequest = (): dispatcher => {
     }
   }
 }
+export default getAllPersons

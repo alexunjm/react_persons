@@ -1,2 +1,2 @@
-export { hideGlobalLoader } from './hideGlobalLoader'
-export { showGlobalLoader } from './showGlobalLoader'
+export { default as hideGlobalLoader } from './hideGlobalLoader'
+export { default as showGlobalLoader } from './showGlobalLoader'

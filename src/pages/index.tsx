@@ -1,9 +1,10 @@
 import Head from 'next/head'
 
 import PersonsTable from 'components/persons-table'
+import { ReactElement } from 'react'
 
 // Full-width fluid until the `lg` breakpoint, then lock to container
-export const Home = (): JSX.Element => (
+export const Home = (): ReactElement => (
   <div className="md:container md:mx-auto font-sans">
     <Head>
       <title>Create Next App</title>

@@ -7,7 +7,7 @@ import { hideGlobalLoader } from 'redux/actions/global'
 
 import 'tailwindcss/tailwind.css'
 
-//makeStore function that returns a new store for every request
+//m akeStore function that returns a new store for every request
 const makeStore = () => store
 const Wrapper = createWrapper(makeStore)
 
