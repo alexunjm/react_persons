@@ -25,3 +25,9 @@ yarn create next-app --example with-typescript-eslint-jest with-typescript-eslin
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+## redux
+
+    npm install next-redux-wrapper react-redux redux-thunk redux --save
+    npm install @types/react-redux -D
+    npm install redux-devtools-extension immutability-helper --save

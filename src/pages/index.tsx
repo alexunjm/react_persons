@@ -2,8 +2,6 @@ import Head from 'next/head'
 
 import PersonsTable from 'components/persons-table'
 
-import 'tailwindcss/tailwind.css'
-
 // Full-width fluid until the `lg` breakpoint, then lock to container
 export const Home = (): JSX.Element => (
   <div className="md:container md:mx-auto font-sans">
