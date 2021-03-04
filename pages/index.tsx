@@ -1,29 +1,28 @@
 import Head from 'next/head'
-import Image from 'next/image'
+
+import 'tailwindcss/tailwind.css'
 
 export const Home = (): JSX.Element => (
-  <div className="container">
+  <>
     <Head>
       <title>Create Next App</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
+    <header>
+      <hgroup>
+        <h1 className="bg-blue-600">Persons</h1>
+        <h2>Update or delete any person listed here</h2>
+      </hgroup>
+    </header>
+
     <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-
-      <p className="description">
-        Get started by editing <code>pages/index.tsx</code>
-      </p>
-
-      <button
-        onClick={() => {
-          window.alert('With typescript and Jest')
-        }}
-      >
-        Test Button
-      </button>
+      <section>
+        <article>table</article>
+      </section>
+      <section>
+        <article>form</article>
+      </section>
     </main>
 
     <footer>
@@ -32,11 +31,10 @@ export const Home = (): JSX.Element => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        Powered by{' '}
-        <Image src="/vercel.svg" alt="Vercel Logo" height={'32'} width={'64'} />
+        Made with love for Alexander Jaramillo
       </a>
     </footer>
-  </div>
+  </>
 )
 
 export default Home
