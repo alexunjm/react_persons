@@ -1,13 +1,15 @@
 import actionTypes from 'redux/constants/actionTypes'
 import { Dispatcher } from 'redux/actions/Dispatcher'
-import savePersonService from 'services/person/savePersonService'
+import updatePersonService from 'services/person/updatePersonService'
 import getPersonByIdService from 'services/person/getPersonByIdService'
 
-const savePersonRequest = ({
+const updatePersonRequest = ({
+  id,
   firstname,
   lastname,
   age,
 }: {
+  id: string
   firstname: string
   lastname: string
   age: string
@@ -16,10 +18,10 @@ const savePersonRequest = ({
     try {
       dispatch(request())
 
-      savePersonService({ firstname, lastname, age: Number(age) })
-        .then((generatedId) => {
+      updatePersonService(id, { firstname, lastname, age: Number(age) })
+        .then(() => {
           dispatch(success())
-          return generatedId
+          return id
         }) /* 
         .catch((error) => {
           dispatch(failure(`communication error: ${error}`))
@@ -57,9 +59,9 @@ const savePersonRequest = ({
 
   function successGetPersonById(payload) {
     return {
-      type: actionTypes.person.ADD,
+      type: actionTypes.person.UPDATE,
       payload,
     }
   }
 }
-export default savePersonRequest
+export default updatePersonRequest

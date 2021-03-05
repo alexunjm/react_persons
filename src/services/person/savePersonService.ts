@@ -19,10 +19,9 @@ const savePersonService: (person: Person) => Promise<any> = async ({
     },
   }
 
-  const response = await Axios(config)
-  const data = response.data
+  await Axios(config)
 
-  return data
+  return config.data.id
 }
 
 export default savePersonService

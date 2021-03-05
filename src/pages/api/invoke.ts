@@ -19,8 +19,10 @@ export const invoke = (
   Axios(config)
     .then((value) => {
       const { status, statusText, data } = value
-      if (typeof data == 'string') {
-        return res.status(status).json({ err: statusText })
+      // console.log({ status, statusText, data }, value)
+
+      if (typeof data == 'string' || !data.info) {
+        return res.status(status).json({ message: statusText })
       }
       return res.status(data.info.status).json({ ...data.data })
     })

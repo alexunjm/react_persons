@@ -1,7 +1,12 @@
 import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPersons, deletePerson } from 'redux/actions/person'
+import {
+  getAllPersons,
+  deletePerson,
+  personFormFill,
+} from 'redux/actions/person'
 import { PersonState } from 'redux/state/person'
+import { Person } from 'services/person'
 
 interface ActionRowComponentProps {
   handleClick: () => void
@@ -25,10 +30,14 @@ const ActionRowComponent: FC<ActionRowComponentProps> = ({
     </button>
   )
 }
-const EditHandlerChild: FC = () => {
+const EditHandlerChild: FC<{ person: Person }> = ({
+  person,
+}: {
+  person: Person
+}) => {
   const dispatch = useDispatch()
   const handleClick = () => {
-    dispatch(getAllPersons())
+    dispatch(personFormFill(person))
   }
 
   return (
@@ -117,7 +126,7 @@ const PersonsTable: FC = () => {
                       ))}
 
                       <td className="pl-4 py-2 whitespace-nowrap text-right text-sm font-medium">
-                        <EditHandlerChild />
+                        <EditHandlerChild person={row} />
                       </td>
                       <td className="pr-4 py-2 whitespace-nowrap text-right text-sm font-medium">
                         <RemoveHandlerChild id={`${row.id}`} />

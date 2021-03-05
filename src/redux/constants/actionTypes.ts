@@ -40,5 +40,12 @@ export default {
         },
       },
     },
+    form: {
+      FILL: 'person/FORM_FILL',
+      PRINT_ERROR: 'person/FORM_PRINT_ERROR',
+      CLEAN_ERROR: 'person/FORM_CLEAN_ERROR',
+    },
+    ADD: 'person/ADD',
+    UPDATE: 'person/UPDATE',
   },
 }
