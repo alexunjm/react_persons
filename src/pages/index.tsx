@@ -24,12 +24,12 @@ export const Home = (): ReactElement => (
 
     <main>
       <section>
-        <article>
-          <PersonsTable test="hello" />
-        </article>
+        <article>form</article>
       </section>
       <section>
-        <article>form</article>
+        <article>
+          <PersonsTable />
+        </article>
       </section>
     </main>
 

@@ -1,6 +1,7 @@
-import { FC } from 'react'
-import { useDispatch } from 'react-redux'
+import { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllPersons } from 'redux/actions/person'
+import { PersonState } from 'redux/state/person'
 
 const EditHandlerChild: FC = () => {
   const dispatch = useDispatch()
@@ -32,62 +33,64 @@ const TextChild: FC<TextChildProps> = ({ textValue }: TextChildProps) => (
   </div>
 )
 
-interface PersonsTableProps {
-  test: string
-}
+const PersonsTable: FC = () => {
+  const personState = useSelector(
+    (state: { person: PersonState }) => state.person
+  )
+  const colNames = personState.len > 0 ? Object.keys(personState.all[0]) : []
 
-const PersonsTable: FC<PersonsTableProps> = ({ test }: PersonsTableProps) => {
-  const colNames = ['Name', 'Title', 'Status', 'Role']
-  const sample = {
-    Id: 'abc123',
-    Name: 'Jane Cooper',
-    Title: 'Regional Paradigm Technician',
-    Status: 'Active',
-    Role: 'Admin',
-  }
+  const dispatch = useDispatch()
+  useEffect((): void => {
+    dispatch(getAllPersons())
+  }, [])
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <div className="flex flex-col">
-      {test}
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  {colNames.map((col, i) => (
-                    <th
-                      scope="col"
-                      key={`${col + i}-h`}
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      {col}
+            {!personState.loading ? (
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    {colNames.map((col, i) => (
+                      <th
+                        scope="col"
+                        key={`${col + i}-h`}
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {col}
+                      </th>
+                    ))}
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">Edit</span>
                     </th>
-                  ))}
-                  <th scope="col" className="relative px-6 py-3">
-                    <span className="sr-only">Edit</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  {colNames.map((col, i) => (
-                    <td
-                      key={`${col + i}-${1}`}
-                      className="px-6 py-4 whitespace-nowrap"
-                    >
-                      <TextChild textValue={sample[col]} />
-                    </td>
-                  ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {personState.all.map((row) => (
+                    <tr key={row.id}>
+                      {colNames.map((col, j) => (
+                        <td
+                          key={`${row.id}-${j}`}
+                          className="px-6 py-4 whitespace-nowrap"
+                        >
+                          <TextChild textValue={row[col]} />
+                        </td>
+                      ))}
 
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <EditHandlerChild />
-                  </td>
-                </tr>
-                {/* More items... */}
-              </tbody>
-            </table>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <EditHandlerChild />
+                      </td>
+                    </tr>
+                  ))}
+                  {/* More items... */}
+                </tbody>
+              </table>
+            ) : (
+              'Loading persons...'
+            )}
           </div>
         </div>
       </div>
