@@ -1,8 +1,30 @@
 import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPersons } from 'redux/actions/person'
+import { getAllPersons, deletePerson } from 'redux/actions/person'
 import { PersonState } from 'redux/state/person'
 
+interface ActionRowComponentProps {
+  handleClick: () => void
+  icon: string
+  text: string
+}
+
+const ActionRowComponent: FC<ActionRowComponentProps> = ({
+  handleClick,
+  icon,
+  text,
+}: ActionRowComponentProps) => {
+  return (
+    <button
+      className="text-indigo-200 hover:text-indigo-400 focus:outline-none flex flex-col items-center"
+      type="button"
+      onClick={() => handleClick()}
+    >
+      <span>{icon}</span>
+      <span className="text-xs">{text}</span>
+    </button>
+  )
+}
 const EditHandlerChild: FC = () => {
   const dispatch = useDispatch()
   const handleClick = () => {
@@ -10,13 +32,29 @@ const EditHandlerChild: FC = () => {
   }
 
   return (
-    <button
-      className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
-      type="button"
-      onClick={() => handleClick()}
-    >
-      Edit
-    </button>
+    <ActionRowComponent
+      {...{
+        handleClick,
+        icon: '✏',
+        text: 'Edit',
+      }}
+    />
+  )
+}
+const RemoveHandlerChild: FC<{ id: string }> = ({ id }: { id: string }) => {
+  const dispatch = useDispatch()
+  const handleClick = () => {
+    dispatch(deletePerson(id))
+  }
+
+  return (
+    <ActionRowComponent
+      {...{
+        handleClick,
+        icon: '❌',
+        text: 'Remove',
+      }}
+    />
   )
 }
 
@@ -27,8 +65,6 @@ const TextChild: FC<TextChildProps> = ({ textValue }: TextChildProps) => (
   <div className="flex items-center">
     <div className="ml-4">
       <div className="text-sm text-gray-900">{textValue}</div>
-      {/* <div className="text-sm font-medium text-gray-900">Jane Cooper</div> */}
-      {/* <div className="text-sm text-gray-500">jane.cooper@example.com</div> */}
     </div>
   </div>
 )
@@ -63,8 +99,8 @@ const PersonsTable: FC = () => {
                         {col}
                       </th>
                     ))}
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
+                    <th scope="col" colSpan={2} className="relative px-6 py-3">
+                      <span className="sr-only">Action</span>
                     </th>
                   </tr>
                 </thead>
@@ -80,8 +116,11 @@ const PersonsTable: FC = () => {
                         </td>
                       ))}
 
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="pl-4 py-2 whitespace-nowrap text-right text-sm font-medium">
                         <EditHandlerChild />
+                      </td>
+                      <td className="pr-4 py-2 whitespace-nowrap text-right text-sm font-medium">
+                        <RemoveHandlerChild id={`${row.id}`} />
                       </td>
                     </tr>
                   ))}

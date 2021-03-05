@@ -36,6 +36,36 @@ export const personReducer = (
       return newData
     }
 
+    case actionTypes.person.request.delete.START: {
+      const newData = update(state, {
+        loading: { $set: true },
+      })
+      return newData
+    }
+
+    case actionTypes.person.request.delete.SUCCESS: {
+      const index = state.all.findIndex((person) => person.id == action.payload)
+      const newData = update(state, {
+        loading: { $set: false },
+        all: { $splice: [[index, 1]] },
+        len: { $set: state.len - 1 },
+        error: { $set: false },
+        errorMessage: { $set: '' },
+      })
+
+      return newData
+    }
+
+    case actionTypes.person.request.delete.FAILURE: {
+      const newData = update(state, {
+        loading: { $set: false },
+        error: { $set: true },
+        errorMessage: { $set: action.payload.message },
+      })
+
+      return newData
+    }
+
     default:
       return state
   }

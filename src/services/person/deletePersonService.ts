@@ -1,9 +1,12 @@
 import Axios, { AxiosRequestConfig } from 'axios'
+import { moduleName } from '.'
 
-const deletePersonService: () => Promise<any> = async (): Promise<any> => {
+const deletePersonService: (id: string) => Promise<any> = async (
+  id: string
+): Promise<any> => {
   const config: AxiosRequestConfig = {
     method: 'delete',
-    url: 'localhost:8080/persons',
+    url: `/api/${moduleName}/${id}`,
     headers: {},
   }
 

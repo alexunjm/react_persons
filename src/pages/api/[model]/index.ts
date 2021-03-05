@@ -15,6 +15,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse): void => {
   const url = apiURI + '/' + (model as string)
   const data = req.body
 
-  invoke(method, url, data, res)
+  return invoke(method, url, data, res)
 }
 export default handler
