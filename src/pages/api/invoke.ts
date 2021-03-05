@@ -18,8 +18,11 @@ export const invoke = (
 
   Axios(config)
     .then((value) => {
-      const { info, data } = value.data
-      res.status(info.status).json({ ...data })
+      const { status, statusText, data } = value
+      if (typeof data == 'string') {
+        return res.status(status).json({ err: statusText })
+      }
+      return res.status(data.info.status).json({ ...data.data })
     })
     .catch((err) => {
       try {
@@ -30,7 +33,7 @@ export const invoke = (
         data = { ...data }
         status = data.status || status
         statusText = data.message || statusText
-        res.status(status).json({ err: statusText })
+        return res.status(status).json({ err: statusText })
       } catch (error) {
         const { status, statusText } = err.response
         return res.status(status).json({ err: statusText })
