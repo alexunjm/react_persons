@@ -1,13 +1,23 @@
 import { FC } from 'react'
+import { useDispatch } from 'react-redux'
+import { getAllPersons } from 'redux/actions/person'
 
-const EditHandlerChild: FC = () => (
-  <button
-    className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
-    type="button"
-  >
-    Edit
-  </button>
-)
+const EditHandlerChild: FC = () => {
+  const dispatch = useDispatch()
+  const handleClick = () => {
+    dispatch(getAllPersons())
+  }
+
+  return (
+    <button
+      className="text-indigo-600 hover:text-indigo-900 focus:outline-none"
+      type="button"
+      onClick={() => handleClick()}
+    >
+      Edit
+    </button>
+  )
+}
 
 interface TextChildProps {
   textValue: string

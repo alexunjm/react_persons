@@ -1,15 +1,27 @@
 import actionTypes from 'redux/constants/actionTypes'
 import { Dispatcher } from 'redux/actions/Dispatcher'
+import getAllPersonsService from 'services/person/getAllPersonsService'
 
 const getAllPersons = (): Dispatcher => {
   return (dispatch: (action: { type: string; payload?: any }) => void) => {
     try {
-      console.warn('GetAllPersonsRequest')
+      dispatch(request())
 
-      dispatch(success([]))
+      getAllPersonsService()
+        .then((data) => {
+          const payload = data
+          dispatch(success(payload))
+        })
+        .catch((error) => {
+          dispatch(failure(`communication error: ${error}`))
+        })
     } catch (error) {
-      dispatch(failure(`error getting interaction result: ${error}`))
+      dispatch(failure(`error getting persons result: ${error}`))
     }
+  }
+
+  function request() {
+    return { type: actionTypes.person.request.get.all.START }
   }
 
   function success(data: any) {
