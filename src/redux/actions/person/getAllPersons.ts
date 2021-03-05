@@ -9,7 +9,16 @@ const getAllPersons = (): Dispatcher => {
 
       getAllPersonsService()
         .then((data) => {
-          const payload = data
+          const payload = Object.keys(data).reduce(
+            (result, key) => ({
+              data: [data[key], ...result.data],
+              len: result.len + 1,
+            }),
+            {
+              data: [],
+              len: 0,
+            }
+          )
           dispatch(success(payload))
         })
         .catch((error) => {
