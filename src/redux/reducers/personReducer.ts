@@ -17,7 +17,8 @@ export const personReducer = (
     case actionTypes.person.request.get.all.SUCCESS: {
       const newData = update(state, {
         loading: { $set: false },
-        all: { $set: action.payload.access_token },
+        all: { $set: action.payload.data },
+        len: { $set: action.payload.len },
         error: { $set: false },
         errorMessage: { $set: '' },
       })
