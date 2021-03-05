@@ -1,10 +1,9 @@
 import Axios, { AxiosRequestConfig } from 'axios'
-import { moduleName } from '.'
 
-const getAllPersonsService: () => Promise<any> = async (): Promise<any> => {
+const deletePersonService: () => Promise<any> = async (): Promise<any> => {
   const config: AxiosRequestConfig = {
-    method: 'get',
-    url: `/api/${moduleName}`,
+    method: 'delete',
+    url: 'localhost:8080/persons',
     headers: {},
   }
 
@@ -14,4 +13,4 @@ const getAllPersonsService: () => Promise<any> = async (): Promise<any> => {
   return data
 }
 
-export default getAllPersonsService
+export default deletePersonService

@@ -1,10 +1,12 @@
 import Axios, { AxiosRequestConfig } from 'axios'
 import { moduleName } from '.'
 
-const getAllPersonsService: () => Promise<any> = async (): Promise<any> => {
+const getPersonByIdService: (id: string) => Promise<any> = async (
+  id: string
+): Promise<any> => {
   const config: AxiosRequestConfig = {
     method: 'get',
-    url: `/api/${moduleName}`,
+    url: `/api/${moduleName}/${id}`,
     headers: {},
   }
 
@@ -14,4 +16,4 @@ const getAllPersonsService: () => Promise<any> = async (): Promise<any> => {
   return data
 }
 
-export default getAllPersonsService
+export default getPersonByIdService
